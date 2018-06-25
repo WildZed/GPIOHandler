@@ -158,7 +158,7 @@ class MyError(Exception):
     def __str__(self):
         return repr(self.value)
 
-class ScratchSender(threading.Thread):
+class ScratchSender( threading.Thread ):
     def __init__(self, socket):
         global morse_receiver
         
@@ -255,17 +255,17 @@ class ScratchSender(threading.Thread):
         self.send_scratch_command( 'broadcast "morse_word"' )
 
 
-class ScratchListener(threading.Thread):
-    def __init__(self, socket):
-        threading.Thread.__init__(self)
+class ScratchListener( threading.Thread ):
+    def __init__( self, socket ) :
+        threading.Thread.__init__( self )
         self.scratch_socket = socket
         self._stop = threading.Event()
-        self.wordre = re.compile('(?:"(?:""|[^"])*"|[^"\s]+)')
-        self.quotere = re.compile('""')
+        self.wordre = re.compile( '(?:"(?:""|[^"])*"|[^"\s]+)' )
+        self.quotere = re.compile( '""' )
         self.morse_output_pin = -1
         self.morse_message = ""
         pin_update_func = lambda value : self.physical_pin_update( self.morse_output_pin, value )
-        self.morse_sender = MorseSender(pin_update_func)
+        self.morse_sender = MorseSender( pin_update_func )
         
     def send_scratch_command(self, cmd):
         n = len(cmd)
