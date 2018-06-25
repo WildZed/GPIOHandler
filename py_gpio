@@ -1,0 +1,23 @@
+#!/bin/bash
+
+case "$1" in
+  -*)
+    params="$@"
+  ;;
+  *)
+    params="-scratch-client $@"
+  ;;
+esac
+
+# Check for existing GPIO handler and kill.
+kill_py_gpio
+
+# Start Python GPIO handler script.
+echo "Starting Scratch GPIO handler..."
+sudo python /home/pi/simplesi_scratch_handler/gpio.py ${params} &
+
+# Start Scratch and project with remote sensors enabled.
+# myproj="rsc"
+# myproj="zed"
+# myproj="morse"
+# scratch --document "/home/pi/Documents/Scratch Projects/${myproj}.sb" &
