@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Check for GPIO handler and kill.
+pids=$(sudo ps aux | grep 'python.*scratch_.*gpio_handler.py' | grep -v grep | awk '{print $2}')
+# | xargs echo sudo kill -KILL
+if [ "${pids}" ]; then
+  set -- ${pids}
+  pids="$*"
+  echo "Killing python GPIO pids: ${pids} ..."
+  sudo kill -KILL ${pids}
+fi
